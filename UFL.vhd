@@ -14,11 +14,16 @@ end UFL;
 architecture behavioral of UFL is
 
 begin
-	with sel select
-		s<= 
-			(a and b) when "00",
-			(a or b) when "01",
-			(a xor b) when "10",
-			not(a) when "11",
-			"00000" when others;
+    p_logic : process(a,b,sel)
+    begin
+        for : or i in 0 to 4 loop
+           case sel is        
+              when "00" => s(i) <= a(i) and b(i);
+              when "01" => s(i) <= a(i) or b(i);
+              when "10" => s(i) <= a(i) xor b(i);              
+              when others => not(a(i));        
+           end case;
+        end loop;
+   end process;
+
 end behavioral;
